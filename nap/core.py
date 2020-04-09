@@ -1,5 +1,5 @@
 import argparse
-import cStringIO as StringIO
+from io import StringIO ## for Python 3
 import sys
 import os
 import logging
@@ -113,7 +113,7 @@ def sub_process(args, shell=False, dry_run=False, timeout=3600):
 
 class PluginIO(object):
     def __init__(self, metric_name, hostname, command_pipe=None, dry_run=False):
-        sys.stdout = self._stdout = StringIO.StringIO()
+        sys.stdout = self._stdout = StringIO()
         sys.stderr = self._stdout
         self._perf_container = list()
         self.metric_name = metric_name
@@ -210,7 +210,7 @@ class PluginIO(object):
                 summary += " "
         summary += "\\n"
         details = summary + details.replace("\n", "\\n")
-        if isinstance(details, unicode):
+        if isinstance(details, str):
             details.replace(u"|", u"\u2758")
         else:
             details.replace(u"|", u"\u2758").encode("utf-8")
@@ -257,7 +257,7 @@ class PluginIO(object):
                 summary += " "
         summary += "\\n"
         details = summary + self._stdout.getvalue().replace("\n", "\\n")
-        if isinstance(details, unicode):
+        if isinstance(details, str):
             details.replace(u"|", u"\u2758")
         else:
             details.replace(u"|", u"\u2758").encode("utf-8")
@@ -379,7 +379,7 @@ class Plugin(object):
             log.addHandler(fh)
         else:
             # prevent unintentional output from plugin
-            sys.stdout = plugin_stdout = StringIO.StringIO()
+            sys.stdout = plugin_stdout = StringIO()
             sys.stderr = plugin_stdout
 
         # run logic, metric call

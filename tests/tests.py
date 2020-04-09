@@ -34,10 +34,10 @@ class NAPTests(unittest.TestCase):
 
             io.status = 0
             io.summary = "no issues"
-            print "detailed output"
-            print "print statement"
-            print "another print statement"
-            print args
+            print("detailed output")
+            print("print statement")
+            print("another print statement")
+            print(args)
             io.status = 1
             io.add_perf_data("cpu", 0.24)
             io.add_perf_data("mem", 0.87, uom="%")
@@ -50,10 +50,10 @@ class NAPTests(unittest.TestCase):
         def test_metric2(args, io):
             io.status = 0
             io.summary = "no issues"
-            print "detailed output"
-            print "print statement"
-            print "another print statement"
-            print args
+            print("detailed output")
+            print("print statement")
+            print("another print statement")
+            print(args)
             io.status = 1
             io.add_perf_data("cpu", 0.24)
             io.add_perf_data("mem", 0.87, uom="%")
@@ -71,7 +71,7 @@ class NAPTests(unittest.TestCase):
         def test_metric(args, io):
             io.status = 0
             io.summary = "seq no issues"
-            print "detailed output"
+            print("detailed output")
             call_seq.remove('test_metric')
             self.assertEqual(call_seq, ["test_metric2"])
 
@@ -79,7 +79,7 @@ class NAPTests(unittest.TestCase):
         def test_metric2(args, io):
             io.status = 0
             io.summary = "seq no issues"
-            print "detailed output"
+            print("detailed output")
             call_seq.remove('test_metric')
             self.assertFalse(call_seq)
 
@@ -89,7 +89,7 @@ class NAPTests(unittest.TestCase):
 
             io.status = 0
             io.summary = "seq no issues"
-            print "detailed output"
+            print("detailed output")
             call_seq.remove('test_metric3')
             self.assertEqual(call_seq, ["test_metric", "test_metric2"])
 
@@ -102,7 +102,7 @@ class NAPTests(unittest.TestCase):
         io.add_perf_data("cpu", 0.24)
         io.write("Sample two line output\nfrom unit test\n")  # details
         sys.stdout = nap.core.sys_stdout
-        print io.plugin_passive_out()
+        print(io.plugin_passive_out())
 
         self.assertTrue('PROCESS_SERVICE_CHECK_RESULT;localhost;UnitPlugin;0;OK - summary line | cpu=0.24;;;; '
                         '\\nSample two line output\\nfrom unit test\\n' in io.plugin_passive_out())
@@ -111,7 +111,7 @@ class NAPTests(unittest.TestCase):
     def test_subprocess(self):
         rc, out = nap.core.sub_process("/bin/echo Yes", shell=True, timeout=20)
         self.assertEqual(rc, 0)
-        self.assertTrue("Yes" in out)
+        self.assertTrue(b"Yes" in out)
 
         if SUBPROCESS_TIMEOUT:
             self.assertRaises(subprocess.TimeoutExpired, nap.core.sub_process, "/bin/sleep 10", shell=True, timeout=3)
