@@ -42,7 +42,7 @@ class NAPTests(unittest.TestCase):
             io.add_perf_data("cpu", 0.24)
             io.add_perf_data("mem", 0.87, uom="%")
 
-            self.assertEquals(args.test, "yes")
+            self.assertEqual(args.test, "yes")
             self.assertTrue("detailed output" in io.getvalue())
             self.assertEqual(io.status, 1)
 
